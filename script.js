@@ -1,20 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Sample broker data - replace this with your actual data source
-    const brokers = [
-        {
-            name: "John Smith",
-            mtdSubmitted: 15,
-            mtdFunded: 8,
-            ytdFunded: 850000
-        },
-        {
-            name: "Jane Doe",
-            mtdSubmitted: 12,
-            mtdFunded: 6,
-            ytdFunded: 720000
-        }
-        // Add more brokers here
-    ];
+    // Use broker data from config.js
+    const brokers = brokerData.brokers;
 
     function createBrokerCard(broker) {
         return `
@@ -78,10 +64,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial render
     renderBrokerCards();
-
-    // Example of how to add a new broker (you can expose this function globally if needed)
-    window.addBroker = function(brokerData) {
-        brokers.push(brokerData);
-        renderBrokerCards();
-    }
 });
