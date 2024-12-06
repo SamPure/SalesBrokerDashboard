@@ -1,50 +1,87 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const brokerCards = document.querySelectorAll('.broker-card');
-    let currentIndex = 0;
-
-    function focusNextBroker() {
-        // Remove focus from all cards
-        brokerCards.forEach(card => {
-            card.classList.remove('focused');
-            card.style.transform = 'scale(1)';
-        });
-        
-        // Add focus to current card
-        const currentCard = brokerCards[currentIndex];
-        currentCard.classList.add('focused');
-        currentCard.style.transform = 'scale(1.05)';
-        
-        // Smooth scroll to the focused card if it's not fully visible
-        const cardRect = currentCard.getBoundingClientRect();
-        const isFullyVisible = (
-            cardRect.top >= 0 &&
-            cardRect.left >= 0 &&
-            cardRect.bottom <= window.innerHeight &&
-            cardRect.right <= window.innerWidth
-        );
-
-        if (!isFullyVisible) {
-            currentCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
+    // Sample broker data - replace this with your actual data source
+    const brokers = [
+        {
+            name: "John Smith",
+            mtdSubmitted: 15,
+            mtdFunded: 8,
+            ytdFunded: 850000
+        },
+        {
+            name: "Jane Doe",
+            mtdSubmitted: 12,
+            mtdFunded: 6,
+            ytdFunded: 720000
         }
-        
-        // Update index for next iteration
-        currentIndex = (currentIndex + 1) % brokerCards.length;
+        // Add more brokers here
+    ];
+
+    function createBrokerCard(broker) {
+        return `
+            <div class="broker-card">
+                <h2>${broker.name}</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="label">MTD Submitted</span>
+                        <span class="value">${broker.mtdSubmitted}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">MTD Funded</span>
+                        <span class="value">${broker.mtdFunded}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">YTD Funded</span>
+                        <span class="value">$${broker.ytdFunded.toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
-    // Initial focus
-    focusNextBroker();
+    function updateGridLayout() {
+        const container = document.getElementById('grid-container');
+        const numBrokers = brokers.length;
+        
+        // Calculate optimal number of columns based on number of brokers
+        let columns;
+        if (numBrokers <= 3) columns = numBrokers;
+        else if (numBrokers <= 6) columns = 3;
+        else if (numBrokers <= 12) columns = 4;
+        else if (numBrokers <= 20) columns = 5;
+        else columns = 6;
 
-    // Rotate focus every 10 seconds
-    setInterval(focusNextBroker, 10000);
+        // Update grid template columns
+        container.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    }
 
-    // Add click handler to manually focus cards
-    brokerCards.forEach((card, index) => {
-        card.addEventListener('click', () => {
-            currentIndex = index;
-            focusNextBroker();
-        });
-    });
+    function renderBrokerCards() {
+        const container = document.getElementById('grid-container');
+        container.innerHTML = brokers.map(broker => createBrokerCard(broker)).join('');
+        updateGridLayout();
+
+        // Set up rotation after cards are rendered
+        const brokerCards = document.querySelectorAll('.broker-card');
+        let currentIndex = 0;
+
+        function focusNextBroker() {
+            brokerCards.forEach(card => card.classList.remove('focused'));
+            brokerCards[currentIndex].classList.add('focused');
+            currentIndex = (currentIndex + 1) % brokerCards.length;
+        }
+
+        // Initial focus
+        focusNextBroker();
+
+        // Rotate focus every 10 seconds
+        setInterval(focusNextBroker, 10000);
+    }
+
+    // Initial render
+    renderBrokerCards();
+
+    // Example of how to add a new broker (you can expose this function globally if needed)
+    window.addBroker = function(brokerData) {
+        brokers.push(brokerData);
+        renderBrokerCards();
+    }
 });
