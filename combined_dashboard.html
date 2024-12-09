@@ -4,27 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combined Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
+            background: radial-gradient(circle at center, #00bcd4 0%, #004d40 100%);
+            color: #ffffff;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-        }
-        .section {
             padding: 20px;
-            margin: 10px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
         }
-        .broker-card {
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
             padding: 10px;
-            margin: 10px 0;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
         }
     </style>
 </head>
@@ -33,95 +71,95 @@
         <iframe src="funding-egg/templates/funding_egg.html" width="100%" height="800px" style="border:none;"></iframe>
     </div>
     <div class="section">
-        <div id="grid-container">
-            <div class="broker-card" data-broker-id="1">
+        <div class="grid-container">
+            <div class="card" data-broker-id="1">
                 <h2>Eli</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">3</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">3</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$50,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$50,000</span>
                     </div>
                 </div>
             </div>
-            <div class="broker-card" data-broker-id="2">
+            <div class="card" data-broker-id="2">
                 <h2>Judah</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">2</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">2</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$45,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$45,000</span>
                     </div>
                 </div>
             </div>
-            <div class="broker-card" data-broker-id="3">
+            <div class="card" data-broker-id="3">
                 <h2>Abe</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">4</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">4</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$62,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$62,000</span>
                     </div>
                 </div>
             </div>
-            <div class="broker-card" data-broker-id="4">
+            <div class="card" data-broker-id="4">
                 <h2>Ben</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">5</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">5</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$55,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$55,000</span>
                     </div>
                 </div>
             </div>
-            <div class="broker-card" data-broker-id="5">
+            <div class="card" data-broker-id="5">
                 <h2>Rachel</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">3</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">3</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$48,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$48,000</span>
                     </div>
                 </div>
             </div>
-            <div class="broker-card" data-broker-id="6">
+            <div class="card" data-broker-id="6">
                 <h2>Moe</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">4</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">4</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$58,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$58,000</span>
                     </div>
                 </div>
             </div>
-            <div class="broker-card" data-broker-id="7">
+            <div class="card" data-broker-id="7">
                 <h2>Sam</h2>
                 <div class="stats">
-                    <div class="stat">
-                        <span class="label">MTD Submitted</span>
-                        <span class="value">3</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Submitted</span>
+                        <span class="stat-value">3</span>
                     </div>
-                    <div class="stat">
-                        <span class="label">MTD Funded</span>
-                        <span class="value">$52,000</span>
+                    <div class="stat-item">
+                        <span class="stat-label">MTD Funded</span>
+                        <span class="stat-value">$52,000</span>
                     </div>
                 </div>
             </div>
