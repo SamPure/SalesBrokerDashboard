@@ -62,6 +62,38 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(focusNextBroker, 10000);
     }
 
+    function popOutRandomCard() {
+        const brokerCards = document.querySelectorAll('.broker-card');
+        const randomIndex = Math.floor(Math.random() * brokerCards.length);
+        const selectedCard = brokerCards[randomIndex];
+
+        // Add pop-out class
+        selectedCard.classList.add('pop-out');
+
+        // Remove pop-out class after animation
+        setTimeout(() => {
+            selectedCard.classList.remove('pop-out');
+        }, 500); // Match the duration of the pop-out animation
+    }
+
+    function shuffleBrokerCards() {
+        const container = document.getElementById('grid-container');
+        const cards = Array.from(container.children);
+        // Shuffle the cards array
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]]; // Swap
+        }
+        // Append shuffled cards back to the container
+        cards.forEach(card => container.appendChild(card));
+    }
+
+    // Set interval to pop out a random card every 45 seconds
+    setInterval(popOutRandomCard, 45000); // 45000 ms = 45 seconds
+
+    // Set interval to shuffle cards every 60 seconds
+    setInterval(shuffleBrokerCards, 60000); // 60000 ms = 60 seconds
+
     // Initial render
     renderBrokerCards();
 });
