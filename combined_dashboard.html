@@ -23,6 +23,7 @@
         .funding-egg-section {
             flex: 2;
             height: 100vh;
+            margin-right: 20px; /* Add margin to separate from broker cards */
         }
 
         .brokers-section {
@@ -94,6 +95,16 @@
             border: none;
         }
 
+        .countdown {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 10;
+        }
+
         /* Clone the cards for seamless scrolling */
         .grid-container::after {
             content: "";
@@ -113,6 +124,36 @@
 
         // Shuffle cards every hour
         setInterval(shuffleCards, 3600000); // 3600000 ms = 1 hour
+
+        // Business days countdown
+        function businessDaysLeft() {
+            const today = new Date();
+            const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            let businessDays = 0;
+            let timeLeft = endOfMonth - today;
+
+            while (today <= endOfMonth) {
+                if (today.getDay() !== 0 && today.getDay() !== 6) { // Skip weekends
+                    businessDays++;
+                }
+                today.setDate(today.getDate() + 1);
+            }
+
+            // Update countdown display
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.innerText = `Time Left: ${businessDays} Business Days`;
+
+            // If less than 7 business days left, calculate hours, minutes, seconds
+            if (businessDays <= 7) {
+                const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+                const seconds = Math.floor((timeLeft / 1000) % 60);
+                countdownElement.innerText = `Time Left: ${businessDays} Business Days, ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }
+
+        // Update countdown every second
+        setInterval(businessDaysLeft, 1000);
     </script>
 </head>
 <body>
@@ -121,6 +162,7 @@
             <iframe src="funding-egg/templates/funding_egg.html"></iframe>
         </div>
         <div class="brokers-section">
+            <div class="countdown" id="countdown"></div>
             <div class="grid-container">
                 <!-- Original set of cards -->
                 <div class="card" data-broker-id="1">
