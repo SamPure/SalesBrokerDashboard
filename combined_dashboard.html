@@ -10,15 +10,49 @@
             color: #ffffff;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .funding-egg-section {
+            flex: 2;
+            height: 100vh;
+        }
+
+        .brokers-section {
+            flex: 1;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            padding: 20px 0;
+            animation: scroll 40s linear infinite;
+            padding-right: 20px;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+
+        .grid-container:hover {
+            animation-play-state: paused;
         }
 
         .card {
@@ -28,6 +62,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 250px;
         }
 
         .stats {
@@ -59,107 +94,155 @@
 
         iframe {
             width: 100%;
-            height: 800px;
+            height: 100%;
             border: none;
-            border-radius: 10px;
-            background: transparent;
+        }
+
+        /* Clone the cards for seamless scrolling */
+        .grid-container::after {
+            content: "";
+            display: block;
+            height: 20px; /* Gap between repetitions */
         }
     </style>
 </head>
 <body>
-    <div class="funding-egg-section">
-        <iframe src="funding-egg/templates/funding_egg.html" width="100%" height="100vh" style="border:none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1;"></iframe>
-    </div>
-    <div class="section" style="margin-top: 100vh;">
-        <div class="grid-container">
-            <div class="card" data-broker-id="1">
-                <h2>Eli</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">3</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$50,000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-broker-id="2">
-                <h2>Judah</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">2</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$45,000</span>
+    <div class="dashboard-container">
+        <div class="funding-egg-section">
+            <iframe src="funding-egg/templates/funding_egg.html"></iframe>
+        </div>
+        <div class="brokers-section">
+            <div class="grid-container">
+                <!-- Original set of cards -->
+                <div class="card" data-broker-id="1">
+                    <h2>Eli</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">3</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$50,000</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" data-broker-id="3">
-                <h2>Abe</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">4</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$62,000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-broker-id="4">
-                <h2>Ben</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">5</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$55,000</span>
+                <div class="card" data-broker-id="2">
+                    <h2>Judah</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">2</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$45,000</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" data-broker-id="5">
-                <h2>Rachel</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">3</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$48,000</span>
-                    </div>
-                </div>
-            </div>
-            <div class="card" data-broker-id="6">
-                <h2>Moe</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">4</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$58,000</span>
+                <div class="card" data-broker-id="3">
+                    <h2>Abe</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">4</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$62,000</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" data-broker-id="7">
-                <h2>Sam</h2>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Submitted</span>
-                        <span class="stat-value">3</span>
+                <div class="card" data-broker-id="4">
+                    <h2>Ben</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">5</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$55,000</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-label">MTD Funded</span>
-                        <span class="stat-value">$52,000</span>
+                </div>
+                <div class="card" data-broker-id="5">
+                    <h2>Rachel</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">3</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$48,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-broker-id="6">
+                    <h2>Moe</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">4</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$58,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-broker-id="7">
+                    <h2>Sam</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">3</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$52,000</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Duplicate cards for seamless scrolling -->
+                <div class="card" data-broker-id="1">
+                    <h2>Eli</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">3</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$50,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-broker-id="2">
+                    <h2>Judah</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">2</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$45,000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-broker-id="3">
+                    <h2>Abe</h2>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Submitted</span>
+                            <span class="stat-value">4</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">MTD Funded</span>
+                            <span class="stat-value">$62,000</span>
+                        </div>
                     </div>
                 </div>
             </div>
