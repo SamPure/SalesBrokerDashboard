@@ -38,7 +38,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            animation: scroll 40s linear infinite;
+            animation: scroll 60s linear infinite; /* Slower scrolling */
             padding-right: 20px;
         }
 
@@ -49,10 +49,6 @@
             100% {
                 transform: translateY(-100%);
             }
-        }
-
-        .grid-container:hover {
-            animation-play-state: paused;
         }
 
         .card {
@@ -105,6 +101,19 @@
             height: 20px; /* Gap between repetitions */
         }
     </style>
+    <script>
+        // Shuffle function
+        function shuffleCards() {
+            const container = document.querySelector('.grid-container');
+            const cards = Array.from(container.children);
+            const shuffled = cards.sort(() => Math.random() - 0.5);
+            container.innerHTML = '';
+            shuffled.forEach(card => container.appendChild(card));
+        }
+
+        // Shuffle cards every hour
+        setInterval(shuffleCards, 3600000); // 3600000 ms = 1 hour
+    </script>
 </head>
 <body>
     <div class="dashboard-container">
