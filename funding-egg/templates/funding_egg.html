@@ -13,6 +13,7 @@
             padding: 0;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
@@ -96,10 +97,6 @@
             from { --funding-angle: 0deg; }
             to { --funding-angle: 360deg; }
         }
-
-        .metrics {
-            display: none; /* Hide metrics section */
-        }
     </style>
 </head>
 <body>
@@ -126,6 +123,14 @@
             <div class="funding-amount" id="totalFunding">$0</div>
         </div>
     </div>
+    <form id="fundingForm" style="margin-top: 20px;">
+        <h3>Add Funding</h3>
+        <div class="mb-3">
+            <label for="fundingInput" class="form-label">Funding Amount:</label>
+            <input type="number" class="form-control" id="fundingInput" placeholder="Enter amount" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Funding</button>
+    </form>
     <script>
         // Initialize variables for funding visualization
         let maxFunding = 1000000; // Initial max funding goal (adjustable)
@@ -152,19 +157,20 @@
             }
         }
 
+        // Handle form submission
+        document.getElementById('fundingForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const fundingInput = document.getElementById('fundingInput');
+            const fundingAmount = parseFloat(fundingInput.value);
+            if (!isNaN(fundingAmount) && fundingAmount > 0) {
+                currentTotal += fundingAmount; // Update the current total
+                updateEggFill(currentTotal); // Update the egg fill
+                fundingInput.value = ''; // Clear the input field
+            }
+        });
+
         // Initial updates
         updateEggFill(0);
-
-        // Fetch and update funding data every 5 seconds
-        setInterval(() => {
-            fetch('/api/sales')
-                .then(response => response.json())
-                .then(sales => {
-                    currentTotal = sales.reduce((sum, sale) => sum + sale.amount, 0);
-                    updateEggFill(currentTotal);
-                })
-                .catch(error => console.error('Error:', error));
-        }, 5000);
     </script>
 </body>
 </html>
