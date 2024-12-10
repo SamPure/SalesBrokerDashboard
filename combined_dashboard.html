@@ -266,6 +266,30 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Add Funding</button>
             </form>
+            <form id="brokerForm" style="margin-top: 20px;">
+                <h3>Update Broker Information</h3>
+                <div class="mb-3">
+                    <label for="brokerName" class="form-label">Broker Name:</label>
+                    <select id="brokerName" class="form-select" required>
+                        <option value="1">Eli</option>
+                        <option value="2">Judah</option>
+                        <option value="3">Abe</option>
+                        <option value="4">Ben</option>
+                        <option value="5">Rachel</option>
+                        <option value="6">Moe</option>
+                        <option value="7">Sam</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="submittedInput" class="form-label">MTD Submitted:</label>
+                    <input type="number" class="form-control" id="submittedInput" placeholder="Enter submitted amount" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fundedInput" class="form-label">MTD Funded:</label>
+                    <input type="number" class="form-control" id="fundedInput" placeholder="Enter funded amount" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Broker</button>
+            </form>
         </div>
         <div class="brokers-section">
             <div class="grid-container">
@@ -363,5 +387,28 @@
             </div>
         </div>
     </div>
+    <script>
+        // Handle broker form submission
+        document.getElementById('brokerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const brokerName = document.getElementById('brokerName').value;
+            const submittedAmount = parseFloat(document.getElementById('submittedInput').value);
+            const fundedAmount = parseFloat(document.getElementById('fundedInput').value);
+
+            if (!isNaN(submittedAmount) && submittedAmount >= 0) {
+                const brokerCard = document.querySelector(`.card[data-broker-id="${brokerName}"]`);
+                brokerCard.querySelector('.stat-value:nth-child(1)').textContent = submittedAmount;
+            }
+
+            if (!isNaN(fundedAmount) && fundedAmount >= 0) {
+                const brokerCard = document.querySelector(`.card[data-broker-id="${brokerName}"]`);
+                brokerCard.querySelector('.stat-value:nth-child(2)').textContent = `$${fundedAmount.toLocaleString('en-US')}`;
+            }
+
+            // Clear the input fields
+            document.getElementById('submittedInput').value = '';
+            document.getElementById('fundedInput').value = '';
+        });
+    </script>
 </body>
 </html>
