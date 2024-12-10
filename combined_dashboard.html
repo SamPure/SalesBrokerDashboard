@@ -39,8 +39,9 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            animation: scroll 60s linear infinite; /* Slower scrolling */
+            animation: scroll 60s linear infinite;
             padding-right: 20px;
+            height: calc(100vh + 20px); /* Ensures enough height for seamless scrolling */
         }
 
         @keyframes scroll {
@@ -48,7 +49,7 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-100%);
+                transform: translateY(-50%); /* Adjusted to half the height for seamless effect */
             }
         }
 
@@ -108,8 +109,9 @@
         /* Clone the cards for seamless scrolling */
         .grid-container::after {
             content: "";
-            display: block;
-            height: 20px; /* Gap between repetitions */
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensures the after element takes full height */
         }
     </style>
     <script>
@@ -120,6 +122,8 @@
             const shuffled = cards.sort(() => Math.random() - 0.5);
             container.innerHTML = '';
             shuffled.forEach(card => container.appendChild(card));
+            // Append duplicates for seamless scrolling
+            shuffled.forEach(card => container.appendChild(card.cloneNode(true)));
         }
 
         // Shuffle cards every hour
