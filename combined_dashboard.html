@@ -15,20 +15,19 @@
             overflow: hidden;
         }
 
-        .dashboard-container {
-            display: flex;
-            height: 100vh;
+        .container {
+            display: block;
+            padding: 20px;
+            height: calc(100vh - 40px); /* Adjust height to fit both sections */
         }
 
         .funding-egg-section {
-            flex: 2;
-            height: 100vh;
-            margin-right: 40px; /* Increased margin to ensure proper spacing */
+            height: 50%; /* Adjust height for the egg section */
+            margin-bottom: 5px; /* Reduced margin to bring closer to broker cards */
         }
 
         .brokers-section {
-            flex: 1;
-            height: 100vh;
+            height: 50%; /* Adjust height for the brokers section */
             overflow: hidden;
             position: relative;
             padding: 20px;
@@ -41,7 +40,7 @@
             gap: 20px;
             animation: scroll 60s linear infinite;
             padding-right: 20px;
-            height: calc(100vh + 20px); /* Ensures enough height for seamless scrolling */
+            height: calc(100% + 20px); /* Ensures enough height for seamless scrolling */
         }
 
         @keyframes scroll {
@@ -49,7 +48,7 @@
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-50%); /* Adjusted to half the height for seamless effect */
+                transform: translateY(-50%); /* Adjusted for seamless effect */
             }
         }
 
@@ -105,14 +104,6 @@
             border-radius: 5px;
             z-index: 10;
         }
-
-        /* Clone the cards for seamless scrolling */
-        .grid-container::after {
-            content: "";
-            display: flex;
-            flex-direction: column;
-            height: 100%; /* Ensures the after element takes full height */
-        }
     </style>
     <script>
         // Shuffle function
@@ -161,14 +152,13 @@
     </script>
 </head>
 <body>
-    <div class="dashboard-container">
+    <div class="container">
         <div class="funding-egg-section">
             <iframe src="funding-egg/templates/funding_egg.html"></iframe>
         </div>
         <div class="brokers-section">
-            <div class="countdown" id="countdown" style="display: none;"></div>
+            <div class="countdown" id="countdown"></div>
             <div class="grid-container">
-                <!-- Original set of cards -->
                 <div class="card" data-broker-id="1">
                     <h2>Eli</h2>
                     <div class="stats">
@@ -260,7 +250,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Duplicate cards for seamless scrolling -->
                 <div class="card" data-broker-id="1">
                     <h2>Eli</h2>
                     <div class="stats">
