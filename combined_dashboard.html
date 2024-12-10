@@ -182,6 +182,17 @@
             display: block;
             z-index: 10;
         }
+
+        .info-box {
+            margin: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .info-section {
+            margin-bottom: 10px;
+        }
     </style>
     <script>
         // Shuffle function
@@ -272,6 +283,18 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Add Funding</button>
             </form>
+            <div class="info-box">
+                <h3>Broker Information</h3>
+                <div class="info-section">
+                    <strong>Broker Name:</strong> <span id="brokerNameDisplay">Eli</span>
+                </div>
+                <div class="info-section">
+                    <strong>Funded Amount:</strong> <span id="fundedAmountDisplay">$50,000</span>
+                </div>
+                <div class="info-section">
+                    <strong>Submission:</strong> <span id="submissionDisplay">3</span>
+                </div>
+            </div>
             <form id="brokerForm">
                 <h3>Update Broker Information</h3>
                 <div class="mb-3">
