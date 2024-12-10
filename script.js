@@ -94,6 +94,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set interval to shuffle cards every 60 seconds
     setInterval(shuffleBrokerCards, 60000); // 60000 ms = 60 seconds
 
+    // Initialize variables for funding visualization
+    let maxFunding = 1000000; // Initial max funding goal (adjustable)
+    let currentTotal = 0;
+
+    // Function to update the egg fill based on total funding
+    function updateEggFill(total) {
+        const percentage = Math.min((total / maxFunding) * 100, 100);
+        const gradient = document.getElementById('egg-gradient');
+        
+        // Update gradient stops
+        gradient.querySelector('stop:nth-child(1)').setAttribute('offset', `${100 - percentage}%`);
+        
+        // Format total for display with no decimals and custom currency symbol placement
+        const formattedNumber = Math.round(total).toLocaleString('en-US');
+        const formattedTotal = '$' + formattedNumber;
+        
+        // Update total display
+        document.getElementById('totalFunding').textContent = formattedTotal;
+        
+        // Adjust max funding if we exceed it
+        if (total > maxFunding) {
+            maxFunding = total * 1.5; // Increase max by 50%
+        }
+    }
+
+    // Handle form submission for funding
+    document.getElementById('fundingForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        const fundingInput = document.getElementById('fundingInput');
+        const fundingAmount = parseFloat(fundingInput.value);
+        if (!isNaN(fundingAmount) && fundingAmount > 0) {
+            currentTotal += fundingAmount; // Update the current total
+            updateEggFill(currentTotal); // Update the egg fill
+            fundingInput.value = ''; // Clear the input field
+        }
+    });
+
     // Initial render
     renderBrokerCards();
 });
