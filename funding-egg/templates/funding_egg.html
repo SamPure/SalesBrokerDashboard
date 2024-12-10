@@ -1,4 +1,3 @@
-Everything up-to-date
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,33 +98,7 @@ Everything up-to-date
         }
 
         .metrics {
-            position: fixed;
-            left: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            text-align: left;
-            font-family: 'Didone Room Numbers', sans-serif;
-            font-size: 8rem;
-            color: #ffeb3b;
-            text-shadow: 
-                0 0 10px rgba(255, 215, 0, 1.0),    /* Inner gold glow */
-                0 0 20px rgba(255, 215, 0, 0.8),    /* Gold */
-                0 0 30px rgba(255, 140, 0, 0.8),    /* Dark orange */
-                0 0 40px rgba(255, 69, 0, 0.8),     /* Red-orange */
-                0 0 70px rgba(255, 69, 0, 0.6);     /* Extended red-orange */
-            z-index: 1000;
-            line-height: 1;
-            white-space: nowrap;
-        }
-        .metrics p {
-            margin: 0;
-            padding: 0;
-        }
-        .metrics .label {
-            font-size: 6rem;
-            opacity: 0.9;
-            display: block;
-            margin-bottom: 20px;
+            display: none; /* Hide metrics section */
         }
     </style>
 </head>
@@ -153,11 +126,6 @@ Everything up-to-date
             <div class="funding-amount" id="totalFunding">$0</div>
         </div>
     </div>
-    <div class="metrics">
-        <span class="label">Time Left</span>
-        <p><span id="timeRemaining">26</span> Days</p>
-    </div>
-
     <script>
         // Initialize variables for funding visualization
         let maxFunding = 1000000; // Initial max funding goal (adjustable)
@@ -184,22 +152,9 @@ Everything up-to-date
             }
         }
 
-        // Function to update time remaining
-        function updateTimeRemaining() {
-            const now = new Date();
-            const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-            const timeDiff = endOfMonth - now;
-            const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            document.getElementById('timeRemaining').textContent = `${daysRemaining}`;
-        }
-
         // Initial updates
-        updateTimeRemaining();
         updateEggFill(0);
 
-        // Set up intervals for updates
-        setInterval(updateTimeRemaining, 86400000); // Update time remaining every day
-        
         // Fetch and update funding data every 5 seconds
         setInterval(() => {
             fetch('/api/sales')
